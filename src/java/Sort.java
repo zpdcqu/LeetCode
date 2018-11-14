@@ -3,10 +3,11 @@ import java.util.Arrays;
 class Sort{
     public static void main(String[] args) {
         int[] nums = {1,4,2,7,3,9,6};
-       
+       System.out.println("123");
          System.out.println(Arrays.toString( bubble_sort(nums)));
         System.out.println(Arrays.toString( insert_sort(nums)));
         System.out.println(Arrays.toString( selection_sort(nums)));
+        System.out.println(Arrays.toString( quick_sort(nums,0,nums.length-1)));
     }
     
     public static int[] bubble_sort(int[] nums) {
