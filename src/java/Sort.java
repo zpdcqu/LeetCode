@@ -3,11 +3,11 @@ import java.util.Arrays;
 class Sort{
     public static void main(String[] args) {
         int[] nums = {1,4,2,7,3,9,6};
-       System.out.println("123");
+       
          System.out.println(Arrays.toString( bubble_sort(nums)));
         System.out.println(Arrays.toString( insert_sort(nums)));
         System.out.println(Arrays.toString( selection_sort(nums)));
-        System.out.println(Arrays.toString( quick_sort(nums,0,nums.length-1)));
+       System.out.println(Arrays.toString( quick_sort(nums,0,nums.length-1)));
     }
     
     public static int[] bubble_sort(int[] nums) {
@@ -58,25 +58,35 @@ class Sort{
         return nums;        
     }
 
-    public static int[]  quick_sort(int[] nums,int start,int end) {
-        int i = start;
-        int j = end;
-        int key  = nums[i];
-
-        while (i>=j) {
-            //和最右边的比较
-            while (i<j && key<=nums[j]) {
-                j--;
+    public static int[] quick_sort(int[] a,int low,int high){
+        int start = low;
+        int end = high;
+        int key = a[low];
+        
+        
+        while(end>start){
+            //从后往前比较
+            while(end>start&&a[end]>=key)  //如果没有比关键值小的，比较下一个，直到有比关键值小的交换位置，然后又从前往后比较
+                end--;
+            if(a[end]<=key){
+            int temp = a[end];
+                a[end] = a[start];
+                a[start] = temp;
             }
-            nums[i] = nums[j];
-            while (i<j && key>=nums[i]) {
-                i++;
+            //从前往后比较
+            while(end>start&&a[start]<=key)//如果没有比关键值大的，比较下一个，直到有比关键值大的交换位置
+               start++;
+            if(a[start]>=key){
+                int temp = a[start];
+                a[start] = a[end];
+                a[end] = temp;
             }
-            nums[j] = nums[i];
+        //此时第一次循环比较结束，关键值的位置已经确定了。左边的值都比关键值小，右边的值都比关键值大，但是两边的顺序还有可能是不一样的，进行下面的递归调用
         }
-        nums[i] = key;
-        quick_sort(nums, start, i-1);
-        quick_sort(nums, i+1, end);
-        return nums;
+        //递归
+        if(start>low) quick_sort(a,low,start-1);//左边序列。第一个索引位置到关键值索引-1
+        if(end<high) quick_sort(a,end+1,high);//右边序列。从关键值索引+1到最后一个
+        return a;
     }
+    
 }
